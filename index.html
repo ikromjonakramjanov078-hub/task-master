@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080808">
+  <title>TASK MASTER — Vazifalar boshqaruvi</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <a class="brand" href="#">
+        <span class="brand-icon">T</span>
+        <span>TASK <b>MASTER</b></span>
+      </a>
+
+      <p class="menu-label">ASOSIY MENYU</p>
+
+      <nav class="navigation">
+        <button class="nav-item active" data-view="all">
+          <span>▦</span> Barcha vazifalar
+          <span class="nav-count" id="allCount">0</span>
+        </button>
+        <button class="nav-item" data-view="today">
+          <span>◷</span> Bugungi vazifalar
+        </button>
+        <button class="nav-item" data-view="important">
+          <span>★</span> Muhim vazifalar
+        </button>
+        <button class="nav-item" data-view="completed">
+          <span>✓</span> Bajarilganlar
+        </button>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="sidebar-note">
+          <span class="note-icon">✦</span>
+          <h3>Bugun ham oldinga!</h3>
+          <p>Kichik qadamlar katta natijalarga olib keladi.</p>
+        </div>
+        <div class="author">
+          <span>LOYIHA MUALLIFI</span>
+          <strong>AKRAMJONOVA<br>JADRA MARATOVNA</strong>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow" id="todayDate">BUGUNGI REJA</p>
+          <h1 id="pageTitle">Barcha vazifalar</h1>
+          <p class="subtitle">Rejalashtir. Harakat qil. Natijaga erish.</p>
+        </div>
+        <button class="primary-btn" id="openAdd">
+          <span>＋</span> Yangi vazifa
+        </button>
+      </header>
+
+      <section class="stats">
+        <article class="stat-card">
+          <div class="stat-top">
+            <span>JAMI VAZIFALAR</span>
+            <span class="stat-icon">▦</span>
+          </div>
+          <strong id="totalStat">0</strong>
+          <p>Barcha rejalashtirilgan ishlar</p>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-top">
+            <span>JARAYONDA</span>
+            <span class="stat-icon">◷</span>
+          </div>
+          <strong id="progressStat">0</strong>
+          <p>Hozir bajarilayotgan ishlar</p>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-top">
+            <span>BAJARILGAN</span>
+            <span class="stat-icon">✓</span>
+          </div>
+          <strong id="completedStat">0</strong>
+          <p>Muvaffaqiyatli yakunlangan</p>
+        </article>
+
+        <article class="stat-card">
+          <div class="stat-top">
+            <span>KECHIKKAN</span>
+            <span class="stat-icon">!</span>
+          </div>
+          <strong id="overdueStat">0</strong>
+          <p>Muddati o‘tgan vazifalar</p>
+        </article>
+      </section>
+
+      <section class="progress-panel">
+        <div class="progress-info">
+          <div>
+            <span class="section-label">UMUMIY NATIJA</span>
+            <h2>Bugungi samaradorlik</h2>
+          </div>
+          <strong id="progressPercent">0%</strong>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <p id="progressText">Har bir bajarilgan vazifa — yangi yutuq!</p>
+      </section>
+
+      <section class="tasks-section">
+        <div class="section-heading">
+          <div>
+            <span class="section-label">VAZIFALAR MARKAZI</span>
+            <h2>Vazifalar doskasi</h2>
+          </div>
+          <span class="task-total" id="visibleCount">0 ta vazifa</span>
+        </div>
+
+        <div class="toolbar">
+          <label class="search-box">
+            <span>⌕</span>
+            <input id="searchInput" type="search"
+              placeholder="Vazifani qidirish...">
+          </label>
+
+          <select id="categoryFilter" aria-label="Tur bo‘yicha saralash">
+            <option value="all">Barcha turlar</option>
+            <option value="Ish">Ish</option>
+            <option value="O‘qish">O‘qish</option>
+            <option value="Shaxsiy">Shaxsiy</option>
+            <option value="Loyiha">Loyiha</option>
+          </select>
+
+          <select id="sortFilter" aria-label="Saralash">
+            <option value="newest">Eng yangilari</option>
+            <option value="deadline">Muddat bo‘yicha</option>
+            <option value="priority">Muhimlik bo‘yicha</option>
+          </select>
+        </div>
+
+        <div class="board">
+          <section class="task-column">
+            <div class="column-heading">
+              <span class="status-dot dot-new"></span>
+              <h3>YANGI</h3>
+              <span class="column-count" id="newCount">0</span>
+            </div>
+            <div class="task-list" id="newList"></div>
+          </section>
+
+          <section class="task-column">
+            <div class="column-heading">
+              <span class="status-dot dot-progress"></span>
+              <h3>JARAYONDA</h3>
+              <span class="column-count" id="doingCount">0</span>
+            </div>
+            <div class="task-list" id="doingList"></div>
+          </section>
+
+          <section class="task-column">
+            <div class="column-heading">
+              <span class="status-dot dot-done"></span>
+              <h3>BAJARILDI</h3>
+              <span class="column-count" id="doneCount">0</span>
+            </div>
+            <div class="task-list" id="doneList"></div>
+          </section>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <span>TASK MASTER <b>◆</b> MAQSAD SARI HAR KUN</span>
+        <span>MUALLIF: AKRAMJONOVA JADRA MARATOVNA</span>
+      </footer>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="taskModal" hidden>
+    <section class="modal" role="dialog"
+      aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-heading">
+        <div>
+          <span class="section-label">VAZIFA SOZLAMALARI</span>
+          <h2 id="modalTitle">Yangi vazifa yaratish</h2>
+        </div>
+        <button class="close-btn" id="closeModal"
+          aria-label="Yopish">×</button>
+      </div>
+
+      <form id="taskForm">
+        <input type="hidden" id="taskId">
+
+        <label class="field">
+          Vazifa nomi *
+          <input id="taskTitle" maxlength="100"
+            required placeholder="Masalan: JavaScript o‘rganish">
+        </label>
+
+        <label class="field">
+          Tavsif
+          <textarea id="taskDescription" maxlength="500"
+            rows="3" placeholder="Vazifa haqida qisqacha..."></textarea>
+        </label>
+
+        <div class="form-grid">
+          <label class="field">
+            Vazifa turi
+            <select id="taskCategory">
+              <option>Ish</option>
+              <option>O‘qish</option>
+              <option>Shaxsiy</option>
+              <option>Loyiha</option>
+            </select>
+          </label>
+
+          <label class="field">
+            Muhimlik
+            <select id="taskPriority">
+              <option value="high">Yuqori</option>
+              <option value="medium" selected>O‘rta</option>
+              <option value="low">Past</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="form-grid">
+          <label class="field">
+            Bajarish muddati
+            <input id="taskDeadline" type="date">
+          </label>
+
+          <label class="field">
+            Holati
+            <select id="taskStatus">
+              <option value="new">Yangi</option>
+              <option value="doing">Jarayonda</option>
+              <option value="done">Bajarildi</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="secondary-btn"
+            id="cancelModal">Bekor qilish</button>
+          <button type="submit" class="primary-btn" id="saveTask">
+            Vazifani saqlash
+          </button>
+        </div>
+      </form>
+    </section>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
